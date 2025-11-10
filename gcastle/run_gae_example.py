@@ -2,6 +2,7 @@ from castle.common import GraphDAG
 from castle.metrics import MetricsDAG
 from castle.datasets import IIDSimulation, DAG
 from castle.algorithms import GAE
+import time
 
 
 def main():
@@ -20,9 +21,12 @@ def main():
     )
     true_causal_matrix, X = dataset.B, dataset.X
 
-    # structure learning with GAE
-    gae = GAE(input_dim=10)
+    # structure learning with GAE (1 epoch) and timing
+    gae = GAE(input_dim=10, epochs=1)
+    t0 = time.perf_counter()
     gae.learn(X)
+    t1 = time.perf_counter()
+    print(f"GAE training time (epochs=1): {t1 - t0:.4f} s")
 
     # plot predict_dag and true_dag
     GraphDAG(gae.causal_matrix, true_causal_matrix, save_name='result')
