@@ -179,7 +179,7 @@ class GAE(BaseLearner):
 
     def learn(self, data, columns=None, **kwargs):
 
-        x = torch.from_numpy(data).to(self.device)
+        x = torch.from_numpy(data).to(self.device).float()
 
         self.n, self.d = x.shape[:2]
         if x.ndim == 2:
